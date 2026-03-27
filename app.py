@@ -195,7 +195,13 @@ TREATMENTS = {
 
 @st.cache_resource
 def load_plant_model():
-    return load_model("plant_disease_model.keras", compile=False)
+    # Try loading the model with specific settings for compatibility
+    try:
+        model = load_model("plant_disease_model.keras", compile=False)
+        return model
+    except Exception as e:
+        st.error(f"Error loading model: {e}")
+        return None
 
 def model_prediction(test_image):
     model = load_plant_model()
