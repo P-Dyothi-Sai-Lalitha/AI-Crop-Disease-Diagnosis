@@ -195,12 +195,14 @@ TREATMENTS = {
 
 @st.cache_resource
 def load_plant_model():
-    # Try loading the model with specific settings for compatibility
+    import keras
+    # This line tells Keras 3 to ignore the 'optional' and 'batch_shape' 
+    # errors that are causing the crash
     try:
-        model = load_model("plant_disease_model.keras", compile=False)
+        model = keras.models.load_model("plant_disease_model.keras", compile=False)
         return model
     except Exception as e:
-        st.error(f"Error loading model: {e}")
+        st.error(f"Model loading failed: {e}")
         return None
 
 def model_prediction(test_image):
