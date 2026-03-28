@@ -357,7 +357,7 @@ elif st.session_state.page == 'Prediction':
         st.markdown("<h1 style='color: #dfffb6; text-align: center;'>Let's Find Your Plant's Disease</h1>", unsafe_allow_html=True)
         l, m, n = st.columns([0.5, 3, 0.5])
         with m:
-            uploaded_file = st.file_uploader("Upload leaf photo", type=[".jpg",".png",".jpeg"])
+            uploaded_file = st.file_uploader("Upload leaf photo", type=["jpg","png","jpeg"])
             if st.session_state.predicted_disease:
                 st.success(f"Result: {st.session_state.predicted_disease.replace('___', ' ')}")
                 if st.button("Treatment"):
