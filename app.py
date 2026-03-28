@@ -126,12 +126,6 @@ def apply_global_styles():
             /* ---- Selectbox ---- */
             [data-testid="stSelectbox"] label { color: #dfffb6 !important; }
 
-            /* Home page image scales on smaller screens */
-            [data-testid="stImage"] img {
-                max-width: 100% !important;
-                height: auto !important;
-            }
-
             /* ---- MOBILE ---- */
             @media (max-width: 768px) {
                 .block-container { padding: 12px 12px !important; }
@@ -310,7 +304,7 @@ elif st.session_state.page == 'Home':
 
     left, right = st.columns([1, 1], gap="large")
     with left:
-        st.image("Home Page.jpg", width=680)
+        st.image("Home Page.jpg", use_container_width=True)
     with right:
         st.markdown("<div style='height:2vh'></div>", unsafe_allow_html=True)
         st.markdown(
@@ -383,10 +377,9 @@ elif st.session_state.page == 'Prediction':
             st.markdown("</div>", unsafe_allow_html=True)
 
             if st.button("Analyze Image"):
-                
-                idx = model_prediction(uploaded_file)
-                st.session_state.predicted_disease = CLASS_NAMES[idx]
-            st.rerun()
+                with st.spinner("Analyzing..."):
+                    idx = model_prediction(uploaded_file)
+                    st.session_state.predicted_disease = CLASS_NAMES[idx]
 
 # ─────────────────────── TREATMENT ───────────────────────
 elif st.session_state.page == 'Treatment':
