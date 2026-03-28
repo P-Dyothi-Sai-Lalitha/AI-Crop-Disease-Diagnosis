@@ -278,8 +278,11 @@ if st.session_state.page == 'Login':
         password = st.text_input("Password", type="password")
         st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
         if st.button("Login"):
-            st.session_state.user = username
-            navigate('Home')
+            if not username or not password:
+                st.error("Please enter both username and password.")
+            else:
+                st.session_state.user = username
+                navigate('Home')
         if st.button("Register"):
             navigate('Register')
 
@@ -293,7 +296,12 @@ elif st.session_state.page == 'Register':
         new_pass = st.text_input("Create Password", type="password")
         st.markdown("<div style='height:8px'></div>", unsafe_allow_html=True)
         if st.button("Register"):
-            st.success("Registered successfully!")
+            if not new_user or not new_pass:
+                st.error("Please fill in both fields.")
+            elif len(new_pass) < 6:
+                st.warning("Password must be at least 6 characters.")
+            else:
+                st.success("Registered successfully!")
         if st.button("Back to Login"):
             navigate('Login')
 
