@@ -304,7 +304,7 @@ elif st.session_state.page == 'Home':
 
     left, right = st.columns([1, 1], gap="large")
     with left:
-        st.image("Home Page.jpg", use_container_width=True)
+        st.image("Home Page.jpg", width=600)
     with right:
         st.markdown("<div style='height:2vh'></div>", unsafe_allow_html=True)
         st.markdown(
