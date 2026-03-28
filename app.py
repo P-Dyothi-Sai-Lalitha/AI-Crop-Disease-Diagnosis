@@ -1,5 +1,6 @@
-import streamlit as st
-from keras.models import load_model
+import tensorflow as tf
+from tensorflow import keras
+from tensorflow.keras import layers
 import numpy as np
 from PIL import Image
 
@@ -193,18 +194,47 @@ TREATMENTS = {
     "default": "Diagnosis confirmed. Please consult your local agricultural extension office for region-specific chemical recommendations. Ensure you follow all safety labels when applying any treatment to food crops."
 }
 
+
+
 @st.cache_resource
 def load_plant_model():
-    import keras
-    # This line tells Keras 3 to ignore the 'optional' and 'batch_shape' 
-    # errors that are causing the crash
+    
     try:
-        model = keras.models.load_model("plant_disease_model.keras", compile=False)
+        data_augmentation = keras.Sequential([
+            layers.RandomFlip("horizontal"),
+            layers.RandomRotation(0.2),
+            layers.RandomZoom(0.2),
+        ])
+
+        model = keras.Sequential([
+            data_augmentation,
+            layers.Rescaling(1./255),
+            layers.Conv2D(32, (3,3), activation='relu'),
+            layers.MaxPooling2D(),
+            layers.Conv2D(64, (3,3), activation='relu'),
+            layers.MaxPooling2D(),
+            layers.Conv2D(128, (3,3), activation='relu'),
+            layers.MaxPooling2D(),
+            layers.Flatten(),
+            layers.Dense(128, activation='relu'),
+            layers.Dropout(0.5),
+            layers.Dense(38, activation='softmax')
+        ])
+
+        model.build(input_shape=(None, 96, 96, 3))
+
+        # Try full load first, fall back to weights-only
+        try:
+            model = tf.keras.models.load_model("plant_disease_model.keras", compile=False)
+        except:
+            model.load_weights("plant_disease_model.keras")
+        
         return model
+
     except Exception as e:
         st.error(f"Model loading failed: {e}")
         return None
-
+    
 def model_prediction(test_image):
     model = load_plant_model()
     image = Image.open(test_image).resize((96, 96))
