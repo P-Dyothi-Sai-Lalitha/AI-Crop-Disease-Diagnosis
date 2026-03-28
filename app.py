@@ -126,6 +126,12 @@ def apply_global_styles():
             /* ---- Selectbox ---- */
             [data-testid="stSelectbox"] label { color: #dfffb6 !important; }
 
+            /* Home page image scales on smaller screens */
+            [data-testid="stImage"] img {
+                max-width: 100% !important;
+                height: auto !important;
+            }
+
             /* ---- MOBILE ---- */
             @media (max-width: 768px) {
                 .block-container { padding: 12px 12px !important; }
@@ -304,7 +310,7 @@ elif st.session_state.page == 'Home':
 
     left, right = st.columns([1, 1], gap="large")
     with left:
-        st.image("Home Page.jpg", use_container_width=True)
+        st.image("Home Page.jpg", width=680)
     with right:
         st.markdown("<div style='height:2vh'></div>", unsafe_allow_html=True)
         st.markdown(
