@@ -353,7 +353,7 @@ elif st.session_state.page == 'Prediction':
     left, right = st.columns(2)
 
     with left:
-        st.markdown("<div style='height:10vh;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height:5vh;'></div>", unsafe_allow_html=True)
         st.markdown("<h1 style='color: #dfffb6; text-align: center;'>Let's Find Your Plant's Disease</h1>", unsafe_allow_html=True)
         l, m, n = st.columns([0.5, 3, 0.5])
         with m:
