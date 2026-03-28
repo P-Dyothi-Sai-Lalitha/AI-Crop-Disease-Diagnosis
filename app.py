@@ -304,9 +304,11 @@ elif st.session_state.page == 'Home':
 
     left, right = st.columns([1, 1], gap="large")
     with left:
-        st.image("Home Page.jpg", width=500)
+        st.markdown("<div style='margin-top: 40px;'>", unsafe_allow_html=True)
+        st.image("Home Page.jpg", width=600)
+        st.markdown("</div>", unsafe_allow_html=True)
     with right:
-        st.markdown("<div style='height:0vh'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height:2vh'></div>", unsafe_allow_html=True)
         st.markdown(
             "<h4 style='color:#dfffb6; font-size:clamp(0.9rem,1.5vw,1.1rem);'>"
             "Giving your garden a voice before the first leaf falls.</h4>",
