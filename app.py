@@ -324,7 +324,7 @@ elif st.session_state.page == 'Home':
         col_pad, col_img = st.columns([0.1, 1])
 
     with col_img:
-        st.markdown("<div style='height:10vh;'></div>", unsafe_allow_html=True)
+        st.markdown("<div style='height:5vh;'></div>", unsafe_allow_html=True)
         st.image("Home Page.jpg", width=680)
 
     
